@@ -5,17 +5,16 @@ import useHandleKeys from "../hooks/useHandleKeys";
 import useChangeSpeed from "../hooks/useChangeSpeed";
 import useGameLogics from "../hooks/useGameLogics";
 
-const defaultPosition: SnakeSegment[] = [
-  { colStart: 6, rowStart: 5 },
-  { colStart: 5, rowStart: 5 },
-  { colStart: 4, rowStart: 5 },
-];
+
 
 interface Props {
   food: FoodPosition;
   setFood: React.Dispatch<React.SetStateAction<FoodPosition>>;
   defaultFood: () => FoodPosition;
   gameBoardWidth: number;
+  snake:SnakeSegment[]
+  setSnake:React.Dispatch<React.SetStateAction<SnakeSegment[]>>
+  defaultPosition :  SnakeSegment[]
 }
 
 export default function Snake({
@@ -23,8 +22,10 @@ export default function Snake({
   setFood,
   defaultFood,
   gameBoardWidth,
+  snake,
+  setSnake,
+  defaultPosition
 }: Props) {
-  const [snake, setSnake] = useState<SnakeSegment[]>(defaultPosition);
   const [eat, setEat] = useState<boolean>(false);
   const [direction, setDirection] = useState<string>("");
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
@@ -44,7 +45,7 @@ export default function Snake({
 
       return [newHead, ...newArray];
     });
-  }, [direction, eat]);
+  }, [direction, eat, setSnake]);
 
   const handleRestart = useCallback(() => {
     setFood(defaultFood);
@@ -52,7 +53,7 @@ export default function Snake({
     setDirection("");
     setIsGameOver(false);
     
-  }, [defaultFood, setFood]);
+  }, [defaultFood, setFood, setSnake, defaultPosition]);
 
   const handleKey = useHandleKeys({
     direction,

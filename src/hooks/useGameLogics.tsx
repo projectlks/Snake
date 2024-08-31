@@ -14,7 +14,13 @@ export default function useGameLogics({
   setIsGameOver,
   setDirection,
 }: Props) {
+
+
+  // နံရံနဲ့ တိုက်မိရင် သေ ကိုယ်နဲ့တိုက် မိရင် သေ
+
   useEffect(() => {
+
+    // ကိုယ်နဲ့တိုက်
     const head = snake[0];
     const collisionSegment = snake.slice(1).find(
       (item) =>
@@ -22,6 +28,8 @@ export default function useGameLogics({
         item.rowStart === head.rowStart
     );
 
+
+    // နံရံနဲ့ တိုက်မိရင်
     const outOfBounds = snake.find(
       (item) =>
         item.colStart > gameBoardWidth ||

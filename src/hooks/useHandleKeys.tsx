@@ -13,37 +13,36 @@ export default function useHandleKeys({
   isGameOver,
   handleRestart,
 }: Props) {
-  const [isPause, setIsPause] = useState<string>("");
+
   const [isStart, setIsStart] = useState<boolean>(true);
+  
 
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
+      if(isGameOver && e.key !== 'Enter') return
       switch (e.key) {
         case "ArrowLeft":
-          if (direction !== "ArrowRight" && isPause !== "ArrowRight" && !isStart) {
+          if (direction !== "ArrowRight"  && !isStart) {
             setDirection("ArrowLeft");
-            setIsPause("");
           }
           break;
         case "ArrowRight":
-          if (direction !== "ArrowLeft" && isPause !== "ArrowLeft") {
+          if (direction !== "ArrowLeft" ) {
             setDirection("ArrowRight");
             setIsStart(false);
-            setIsPause("");
           }
           break;
         case "ArrowUp":
-          if (direction !== "ArrowDown" && isPause !== "ArrowDown") {
+          if (direction !== "ArrowDown"  ) {
             setIsStart(false);
             setDirection("ArrowUp");
-            setIsPause("");
           }
           break;
         case "ArrowDown":
-          if (direction !== "ArrowUp" && isPause !== "ArrowUp") {
+          if (direction !== "ArrowUp" ) {
             setIsStart(false);
             setDirection("ArrowDown");
-            setIsPause("");
+       
           }
           break;
         case "Enter":
@@ -51,20 +50,12 @@ export default function useHandleKeys({
             handleRestart();
           }
           break;
-        case "p":
-          if (isPause === "") {
-            setDirection("");
-            setIsPause(direction);
-          } else {
-            setDirection(isPause);
-            setIsPause("");
-          }
-          break;
+      
         default:
           break;
       }
     },
-    [direction, isGameOver, handleRestart, isPause, isStart, setDirection]
+    [direction, isGameOver, handleRestart,  isStart, setDirection]
   );
 
   return handleKey;
