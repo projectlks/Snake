@@ -4,27 +4,24 @@ import GameOver from "./GameOver";
 import useHandleKeys from "../hooks/useHandleKeys";
 import useChangeSpeed from "../hooks/useChangeSpeed";
 import useGameLogics from "../hooks/useGameLogics";
-
-
+import { defaultFood } from "./default";
 
 interface Props {
   food: FoodPosition;
   setFood: React.Dispatch<React.SetStateAction<FoodPosition>>;
-  defaultFood: () => FoodPosition;
   gameBoardWidth: number;
-  snake:SnakeSegment[]
-  setSnake:React.Dispatch<React.SetStateAction<SnakeSegment[]>>
-  defaultPosition :  SnakeSegment[]
+  snake: SnakeSegment[];
+  setSnake: React.Dispatch<React.SetStateAction<SnakeSegment[]>>;
+  defaultPosition: SnakeSegment[];
 }
 
 export default function Snake({
   food,
   setFood,
-  defaultFood,
   gameBoardWidth,
   snake,
   setSnake,
-  defaultPosition
+  defaultPosition,
 }: Props) {
   const [eat, setEat] = useState<boolean>(false);
   const [direction, setDirection] = useState<string>("");
@@ -48,12 +45,11 @@ export default function Snake({
   }, [direction, eat, setSnake]);
 
   const handleRestart = useCallback(() => {
-    setFood(defaultFood);
+    setFood(defaultFood(gameBoardWidth));
     setSnake(defaultPosition);
     setDirection("");
     setIsGameOver(false);
-    
-  }, [defaultFood, setFood, setSnake, defaultPosition]);
+  }, [setFood, setSnake, defaultPosition, gameBoardWidth]);
 
   const handleKey = useHandleKeys({
     direction,
@@ -74,10 +70,10 @@ export default function Snake({
       snake[0].colStart === food.randomCol &&
       snake[0].rowStart === food.randomRow
     ) {
-      setFood(defaultFood);
+      setFood(defaultFood(gameBoardWidth));
       setEat(true);
     }
-  }, [snake, food, setFood, defaultFood]);
+  }, [snake, food, setFood, gameBoardWidth]);
 
   useEffect(() => {
     if (direction === "") return;
@@ -91,6 +87,24 @@ export default function Snake({
     setIsGameOver,
     setDirection,
   });
+
+
+  useEffect(()=>{
+
+    const snakeWithoutHead = snake.slice(1)
+
+    if(snakeWithoutHead.find((item)=>{
+      return(
+        item.colStart === food.randomCol && 
+        item.rowStart === food.randomRow
+      )
+    })){
+    setFood(defaultFood(gameBoardWidth))
+    }
+  },[snake, food, setFood, gameBoardWidth])
+
+
+  
   return (
     <>
       {snake.map((segment, index) => (

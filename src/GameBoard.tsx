@@ -1,8 +1,8 @@
 import { useState } from "react";
 import RandomFood from "./components/RandomFood";
 import Snake from "./components/Snake";
-import { defaultFood } from "./components/default";
 import Scores from "./components/Scores";
+import { defaultFood } from "./components/default";
 
 export interface SnakeSegment {
   colStart: number;
@@ -22,17 +22,19 @@ export interface FoodPosition {
 
 export default function GameBoard() {
   const [gameBoardWidth, setGameBoardWidth] = useState<number>(30);
-  const [food, setFood] = useState<FoodPosition>(defaultFood);
+
+
+  const [food, setFood] = useState<FoodPosition>(defaultFood(gameBoardWidth));
   const [snake, setSnake] = useState<SnakeSegment[]>(defaultPosition);
+
+
 
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#8d8de0]">
-      <button className="hidden" onClick={() => setGameBoardWidth(30)}>
-        change width
-      </button>
 
-      <Scores snake={snake}/>
+
+      <Scores snake={snake} setFood={setFood} gameBoardWidth= {gameBoardWidth} setGameBoardWidth={setGameBoardWidth} />
       <section
         style={{
           gridTemplateColumns: `repeat(${gameBoardWidth}, 1fr)`,
@@ -40,7 +42,7 @@ export default function GameBoard() {
         }}
         className="grid w-[700px] h-[700px] bg-red-400"
       >
-        <Snake  defaultPosition={defaultPosition} food={food} setFood={setFood} snake = {snake} setSnake = {setSnake} defaultFood={defaultFood} gameBoardWidth = {gameBoardWidth} />
+        <Snake  defaultPosition={defaultPosition} food={food} setFood={setFood} snake = {snake} setSnake = {setSnake} gameBoardWidth = {gameBoardWidth} />
         <RandomFood food={food} />
       </section>
     </div>
