@@ -56,6 +56,7 @@ export default function Snake({
     setDirection,
     isGameOver,
     handleRestart,
+    snake
   });
 
   const snakeSpeed = useChangeSpeed({ snake });
@@ -104,7 +105,7 @@ export default function Snake({
   },[snake, food, setFood, gameBoardWidth])
 
 
-  
+
   return (
     <>
       {snake.map((segment, index) => (

@@ -42,7 +42,7 @@ export default function GameBoard() {
         }}
         className="grid w-[700px] h-[700px] bg-red-400"
       >
-        <Snake  defaultPosition={defaultPosition} food={food} setFood={setFood} snake = {snake} setSnake = {setSnake} gameBoardWidth = {gameBoardWidth} />
+        <Snake   defaultPosition={defaultPosition} food={food} setFood={setFood} snake = {snake} setSnake = {setSnake} gameBoardWidth = {gameBoardWidth} />
         <RandomFood food={food} />
       </section>
     </div>

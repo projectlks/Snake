@@ -82,7 +82,7 @@ export default function Scores({
       <div className="flex flex-col text-center">
         <span className="text-white text-lg font-medium">Mode</span>
         <select
-          className="text-white text-xl font-bold bg-transparent border-2 border-white rounded-lg p-1 mt-2 hover:bg-white hover:text-blue-600 focus:bg-blue-600 focus:text-white transition-colors duration-300 ease-in-out"
+          className="text-white  transition-all text-xl font-bold bg-transparent border-2 border-white rounded-lg p-1 mt-2 hover:bg-white hover:text-blue-600 focus:bg-blue-600 focus:text-white  duration-300 ease-in-out"
           value={mode}
           onChange={(e) => setMode(e.target.value)}
         >
